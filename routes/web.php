@@ -16,7 +16,17 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+
+
 Route::get('/', [App\Http\Controllers\BlogController::class, 'index']);
+
+// Blog Routes
+Route::prefix('blog')->group(function(){
+    Route::get('/', [App\Http\Controllers\BlogController::class, 'index']);
+    Route::get('/create', [App\Http\Controllers\BlogController::class, 'create']);
+    Route::post('/store', [App\Http\Controllers\BlogController::class, 'store'])->name('blog.store');
+    Route::get('/getToken', [App\Http\Controllers\BlogController::class, 'getToken']);
+});
 
 // Tag Routes
 Route::prefix('tag')->group(function () {

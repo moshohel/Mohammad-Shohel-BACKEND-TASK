@@ -14,6 +14,17 @@ class TagController extends Controller
     // }
 
     /**
+     *
+     *
+     * @return csrf_token
+     */
+
+    public function getToken()
+    {
+        return csrf_token();
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -41,14 +52,10 @@ class TagController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function getToken()
-    {
-        return csrf_token();
-    }
     public function store(Request $request)
     {
 
-        // $this->validate($request, ['name' => 'required']);
+        $this->validate($request, ['name' => 'required']);
         $tag = new Tag;
         $tag->name = $request->name;
         $tag->save();
