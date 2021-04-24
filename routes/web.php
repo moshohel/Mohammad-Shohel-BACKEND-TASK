@@ -18,6 +18,13 @@ use Illuminate\Support\Facades\Route;
 // });
 Route::get('/', [App\Http\Controllers\BlogController::class, 'index']);
 
+// Tag Routes
+Route::prefix('tag')->group(function () {
+    Route::get('/', [App\Http\Controllers\TagController::class, 'index']);
+    Route::post('/store', [App\Http\Controllers\TagController::class, 'store'])->name('tag.store');
+    Route::get('/getToken', [App\Http\Controllers\TagController::class, 'getToken']);
+});
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
