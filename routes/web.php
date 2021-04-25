@@ -25,6 +25,7 @@ Route::prefix('blog')->group(function(){
     Route::get('/', [App\Http\Controllers\BlogController::class, 'index']);
     Route::get('/create', [App\Http\Controllers\BlogController::class, 'create']);
     Route::post('/store', [App\Http\Controllers\BlogController::class, 'store'])->name('blog.store');
+    Route::post('/update/(id)', [App\Http\Controllers\BlogController::class, 'update']);
     Route::get('/getToken', [App\Http\Controllers\BlogController::class, 'getToken']);
 });
 
@@ -32,9 +33,12 @@ Route::prefix('blog')->group(function(){
 Route::prefix('tag')->group(function () {
     Route::get('/', [App\Http\Controllers\TagController::class, 'index']);
     Route::post('/store', [App\Http\Controllers\TagController::class, 'store'])->name('tag.store');
+
     Route::get('/getToken', [App\Http\Controllers\TagController::class, 'getToken']);
 });
 
 Auth::routes();
+Route::get('/getToken', [App\Http\Controllers\Auth\LoginController::class, 'getToken']);
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

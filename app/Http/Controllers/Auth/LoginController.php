@@ -37,4 +37,14 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    /**
+     *
+     *
+     * @return csrf_token
+     */
+    public function getToken()
+    {
+        return csrf_token();
+    }
 }

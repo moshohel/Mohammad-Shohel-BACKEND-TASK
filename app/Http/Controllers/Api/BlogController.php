@@ -1,35 +1,23 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Post;
-use App\Models\Tag;
-use App\Models\Category;
-use Session;
-use Purifier;
 
 class BlogController extends Controller
 {
     /**
+     * Display a listing of the resource.
      *
-     *
-     * @return csrf_token
+     * @return \Illuminate\Http\Response
      */
-    public function getToken()
+    public function index()
     {
-        return csrf_token();
-    }
-
-    /**
-     *
-     *
-     * @return All Blog posts in desc order
-     */
-    public function index (Request $request){
         $posts = Post::orderBy('id', 'desc')->get();
-        return compact('posts');
+        // return compact('posts');
+        return json_encode(compact('posts'));
     }
 
     /**
@@ -39,8 +27,7 @@ class BlogController extends Controller
      */
     public function create()
     {
-        $tags = Tag::all();
-        return view('admin.posts.create', compact('tags'));
+        //
     }
 
     /**
@@ -53,22 +40,45 @@ class BlogController extends Controller
     {
         // validate the data
         $this->validate($request, array(
-                'title'         => 'required|max:255',
-                'body'          => 'required'
-            ));
+            'title'         => 'required|max:255',
+            'body'          => 'required'
+        ));
 
-        // store in the database
-        $post = new Post;
-        $post->title = $request->title;
-        $post->user_id = Auth::id();
-        $post->body = $request->body;
+    // store in the database
+    $post = new Post;
+    $post->title = $request->title;
+    // $post->user_id = Auth::id();
+    $post->user_id = "1";
+    $post->body = $request->body;
 
-        $post->save();
+    $post->save();
 
-        $post->tags()->sync($request->tags, false);
+    $post->tags()->sync($request->tags, false);
 
-        // return redirect()->route('posts.show', $post->id);
-        return Post::orderBy('id', 'desc')->get()->first();
+    // return redirect()->route('posts.show', $post->id);
+    return json_encode(Post::orderBy('id', 'desc')->get()->first());
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
     }
 
     /**
